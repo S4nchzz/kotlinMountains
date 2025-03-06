@@ -37,6 +37,7 @@ class Login : AppCompatActivity() {
         findViewById<Button>(R.id.btn_login).setOnClickListener {
             if (username.text.isEmpty() || password.text.isEmpty()) {
                 Toast.makeText(this@Login, "Los campos no pueden estar vacios.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
             var rows = db.rawQuery(
