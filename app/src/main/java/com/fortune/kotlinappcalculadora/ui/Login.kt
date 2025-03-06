@@ -1,5 +1,6 @@
 package com.fortune.kotlinappcalculadora.ui
 
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -33,15 +35,44 @@ class Login : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.password_field)
 
         findViewById<Button>(R.id.btn_login).setOnClickListener {
+            if (username.text.isEmpty() || password.text.isEmpty()) {
+                Toast.makeText(this@Login, "Los campos no pueden estar vacios.", Toast.LENGTH_SHORT).show()
+            }
+
             var rows = db.rawQuery(
                 "SELECT * FROM user WHERE username = ? AND password = ?",
                 arrayOf(username.text.toString(), password.text.toString())
             )
 
-            while (rows.moveToNext()) {
-                val usernameRetrivedFromDB = rows.getInt(rows.getColumnIndexOrThrow("id"))
-                val passwordRetrivedFromDB = rows.getInt(rows.getColumnIndexOrThrow("id"))
+            if (rows.moveToNext()) {
+                val openMountains = Intent(this@Login, Mountain::class.java)
+
+                val type = when(username.text.toString()) {
+                    "admin" -> {
+                        "A"
+                    }
+
+                    "invitado" -> {
+                        "G"
+                    }
+
+                    "iyan" -> {
+                        "I"
+                    }
+
+                    else -> {""}
+                }
+
+                openMountains.putExtra("username", username.text)
+                openMountains.putExtra("type", type)
+                startActivity(openMountains)
+                finish()
             }
+
+            val alertDialog = AlertDialog.Builder(this)
+                .setTitle("ERROR")
+                .setMessage("El usuario ${username.text} con la contraseña ${password.text} no tienen las credenciales para iniciar sesion")
+                .show()
         }
     }
 

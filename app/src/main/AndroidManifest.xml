@@ -13,6 +13,9 @@
             android:theme="@style/Theme.KotlinAppCalculadora"
             tools:targetApi="31">
         <activity
+                android:name=".ui.Mountain"
+                android:exported="false" />
+        <activity
                 android:name=".ui.Login"
                 android:exported="false" />
         <activity
