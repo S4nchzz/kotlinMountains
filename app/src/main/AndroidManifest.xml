@@ -13,13 +13,19 @@
             android:theme="@style/Theme.KotlinAppCalculadora"
             tools:targetApi="31">
         <activity
-                android:name=".ui.Mountain"
+                android:name=".spinner_mountain_item"
                 android:exported="false" />
         <activity
-                android:name=".ui.Login"
+                android:name=".ui.dialogs.MountainDialog"
                 android:exported="false" />
         <activity
-                android:name=".ui.Calc"
+                android:name=".ui.view.Mountain"
+                android:exported="false" />
+        <activity
+                android:name=".ui.view.Login"
+                android:exported="false" />
+        <activity
+                android:name=".ui.view.Calc"
                 android:exported="false" />
         <activity
                 android:name=".ui.MainActivity"

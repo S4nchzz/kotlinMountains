@@ -1,9 +1,8 @@
-package com.fortune.kotlinappcalculadora.ui
+package com.fortune.kotlinappcalculadora.ui.view
 
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -40,7 +39,7 @@ class Login : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            var rows = db.rawQuery(
+            val rows = db.rawQuery(
                 "SELECT * FROM user WHERE username = ? AND password = ?",
                 arrayOf(username.text.toString(), password.text.toString())
             )
@@ -64,16 +63,21 @@ class Login : AppCompatActivity() {
                     else -> {""}
                 }
 
-                openMountains.putExtra("username", username.text)
+                rows.close()
+                db.close()
+
+                openMountains.putExtra("username", username.text.toString())
                 openMountains.putExtra("type", type)
                 startActivity(openMountains)
                 finish()
+                return@setOnClickListener
             }
 
-            val alertDialog = AlertDialog.Builder(this)
+            AlertDialog.Builder(this)
                 .setTitle("ERROR")
                 .setMessage("El usuario ${username.text} con la contraseña ${password.text} no tienen las credenciales para iniciar sesion")
                 .show()
+
         }
     }
 

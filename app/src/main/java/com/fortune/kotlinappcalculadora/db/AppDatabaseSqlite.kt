@@ -12,8 +12,8 @@ class AppDatabaseSqlite(context: Context, databaseName: String, factory: CursorF
         val user = "CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(255), password VARCHAR(255) NOT NULL)"
         val drop_user = "DROP TABLE IF EXISTS user"
 
-        val mountain = "CREATE TABLE mountain (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255), height DOUBLE NOT NULL, user VARCHAR(255) NOT NULL)"
-        val drop_mountain = "DROP TABLE IF EXISTS user"
+        val mountain = "CREATE TABLE mountain (id VARCHAR(255) PRIMARY KEY, name VARCHAR(255), height DOUBLE NOT NULL, user VARCHAR(255) NOT NULL)"
+        val drop_mountain = "DROP TABLE IF EXISTS mountain"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -36,7 +36,7 @@ class AppDatabaseSqlite(context: Context, databaseName: String, factory: CursorF
 
         val uGuest = ContentValues().apply {
             put("username", "invitado")
-            put("password", "guess")
+            put("password", "guest")
         }
 
         db.insert("user", null, uMe)

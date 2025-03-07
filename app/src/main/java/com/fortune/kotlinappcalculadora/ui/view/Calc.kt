@@ -1,6 +1,5 @@
-package com.fortune.kotlinappcalculadora.ui
+package com.fortune.kotlinappcalculadora.ui.view
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView

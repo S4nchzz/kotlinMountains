@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.fortune.kotlinappcalculadora.R
+import com.fortune.kotlinappcalculadora.ui.view.Calc
+import com.fortune.kotlinappcalculadora.ui.view.Login
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
