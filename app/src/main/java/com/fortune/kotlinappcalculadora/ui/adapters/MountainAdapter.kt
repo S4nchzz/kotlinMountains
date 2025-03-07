@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import com.fortune.kotlinappcalculadora.R
 import com.fortune.kotlinappcalculadora.db.AppDatabaseSqlite
 import com.fortune.kotlinappcalculadora.ui.dialogs.ModifyMountainDialog
@@ -37,28 +38,33 @@ class MountainAdapter(context: Context, list_item_res: Int, items: List<Mountain
             popup.setOnMenuItemClickListener { menuItem ->
                 when(menuItem.itemId) {
                     R.id.modificar_montana -> {
-                        ModifyMountainDialog(item, userType).show(this.fragmentManager, "modifyMountainDialog")
+                        ModifyMountainDialog(item, reloadMountains).show(this.fragmentManager, "modifyMountainDialog")
                         true
                     }
 
                     R.id.eliminar_montana -> {
-                        AlertDialog.Builder(view.context)
-                            .setTitle("¿Estas seguro de que quieres eliminar la montaña?")
-                            .setPositiveButton("Si") { dialog, id ->
-                                val db = conex.writableDatabase
-                                val whereClause = "id = ?"
-                                val whereArgs = arrayOf(item?.id)
+                        if (userType != 'A') {
+                            Toast.makeText(it.context, "No tienes suficientes permisos", Toast.LENGTH_SHORT).show()
+                        } else {
+                            AlertDialog.Builder(view.context)
+                                .setTitle("¿Estas seguro de que quieres eliminar la montaña?")
+                                .setPositiveButton("Si") { dialog, id ->
+                                    val db = conex.writableDatabase
+                                    val whereClause = "id = ?"
+                                    val whereArgs = arrayOf(item?.id)
 
-                                db.delete("mountain", whereClause, whereArgs)
-                                popup.dismiss()
+                                    db.delete("mountain", whereClause, whereArgs)
+                                    popup.dismiss()
 
-                                this@MountainAdapter.reloadMountains()
-                            }
-                            .setNegativeButton("No") { _, _ ->
-                                popup.dismiss()
-                                return@setNegativeButton
-                            }
+                                    this@MountainAdapter.reloadMountains()
+                                }
+                                .setNegativeButton("No") { _, _ ->
+                                    popup.dismiss()
+                                    return@setNegativeButton
+                                }
                             .show()
+                        }
+
                         true
                     }
 

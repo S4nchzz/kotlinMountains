@@ -122,6 +122,7 @@ class Mountain : AppCompatActivity() {
             add_mountain.setOnClickListener {
                 MountainDialog({ id, name, height, username ->
                     injectMountain(id, name, height, username)
+                    loadListViewAdapter()
                 }).show(supportFragmentManager, "mountain_dialog")
             }
         }

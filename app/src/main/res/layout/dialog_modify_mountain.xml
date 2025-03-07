@@ -5,13 +5,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <EditText
+    <TextView
             android:id="@+id/mountain_name"
-            android:enabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
-            android:inputType="text"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:padding="20dp"/>
+
+    <EditText
+            android:id="@+id/mountain_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:padding="20dp"/>
 </LinearLayout>
