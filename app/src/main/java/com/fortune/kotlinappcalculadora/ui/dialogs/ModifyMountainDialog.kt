@@ -24,7 +24,7 @@ class ModifyMountainDialog(val mountain: MountainItem?, val userType: Char) : Di
             val mountainField = dialogView.findViewById<EditText>(R.id.mountain_name)
             mountainField.setText(mountain?.name)
 
-            // Ennable button for admins
+            // Enable button for admins
             if (userType == 'A') {
                 mountainField.isEnabled = true
             }
