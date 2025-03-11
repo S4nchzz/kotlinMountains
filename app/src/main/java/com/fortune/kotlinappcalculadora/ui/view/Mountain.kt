@@ -30,15 +30,25 @@ class Mountain : AppCompatActivity() {
         manageUserData()
         loadListViewAdapter()
 
-        loadNMountainsConquered()
+        setConqueredMountains()
     }
 
-    private fun loadNMountainsConquered() {
+    private fun setConqueredMountains() {
         val db = conex.readableDatabase
 
+        var sql: String? = null
+        var searchParams: Array<String>? = null
+
+        if (intent.getStringExtra("type").toString()[0] == 'A') {
+            sql = "SELECT * FROM mountain"
+        } else {
+            sql = "SELECT * FROM mountain WHERE user = ?"
+            searchParams = arrayOf(intent.getStringExtra("username") ?: "")
+        }
+
         val query = db.rawQuery(
-            "SELECT * FROM mountain WHERE user = ?",
-            arrayOf(intent.getStringExtra("username"))
+            sql,
+            searchParams
         )
 
         val count = query.count
@@ -60,7 +70,7 @@ class Mountain : AppCompatActivity() {
 
     private fun reloadMountains() {
         loadListViewAdapter()
-        loadNMountainsConquered()
+        setConqueredMountains()
     }
 
     private fun getMountainItems(): List<MountainItem> {
