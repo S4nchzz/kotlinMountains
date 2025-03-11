@@ -69,6 +69,12 @@ class Calc : AppCompatActivity() {
             resetValues(null)
             calculatedValue.text = ""
         }
+
+        findViewById<Button>(R.id.btn_inv).setOnClickListener {
+            if (calculatedValue.text.isNotEmpty()) {
+                calculatedValue.text = calculatedValue.text.toString().reversed()
+            }
+        }
     }
 
     private fun calculateResult(a: Long, b: Long, operator: String): Long {
