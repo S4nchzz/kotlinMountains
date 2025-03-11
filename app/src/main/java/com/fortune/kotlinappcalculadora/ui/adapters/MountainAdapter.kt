@@ -13,7 +13,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.fortune.kotlinappcalculadora.R
 import com.fortune.kotlinappcalculadora.db.AppDatabaseSqlite
-import com.fortune.kotlinappcalculadora.ui.dialogs.ModifyMountainDialog
+import com.fortune.kotlinappcalculadora.ui.dialogs.MountainDialog
+import com.fortune.kotlinappcalculadora.ui.enums.MountainOperation
 
 class MountainAdapter(context: Context, list_item_res: Int, items: List<MountainItem>, private val fragmentManager: androidx.fragment.app.FragmentManager, val userType: Char, val reloadMountains: () -> Unit) : ArrayAdapter<MountainItem>(context, list_item_res, items) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -34,36 +35,39 @@ class MountainAdapter(context: Context, list_item_res: Int, items: List<Mountain
             val inflater: MenuInflater = popup.menuInflater
             inflater.inflate(R.menu.item_mountain_menu, popup.menu)
 
+            if (userType != 'A') {
+                popup.menu.findItem(R.id.eliminar_montana).isVisible = false
+            }
+
             val conex = AppDatabaseSqlite(view.context, "exam-db", null, 1)
             popup.setOnMenuItemClickListener { menuItem ->
                 when(menuItem.itemId) {
                     R.id.modificar_montana -> {
-                        ModifyMountainDialog(item, reloadMountains).show(this.fragmentManager, "modifyMountainDialog")
+                        item?.let { mItem ->
+                            MountainDialog(MountainOperation.MODIFY, mItem, reloadMountains).show(fragmentManager, "Modify mountain")
+                        }
                         true
                     }
 
                     R.id.eliminar_montana -> {
-                        if (userType != 'A') {
-                            Toast.makeText(it.context, "No tienes suficientes permisos", Toast.LENGTH_SHORT).show()
-                        } else {
-                            AlertDialog.Builder(view.context)
-                                .setTitle("¿Estas seguro de que quieres eliminar la montaña?")
-                                .setPositiveButton("Si") { dialog, id ->
-                                    val db = conex.writableDatabase
-                                    val whereClause = "id = ?"
-                                    val whereArgs = arrayOf(item?.id)
+                        AlertDialog.Builder(view.context)
+                            .setTitle("Eliminar montaña")
+                            .setMessage("¿Estas seguro de que quieres eliminar la montaña '${item?.name}'?")
+                            .setPositiveButton("Si") { dialog, id ->
+                                val db = conex.writableDatabase
+                                val whereClause = "id = ?"
+                                val whereArgs = arrayOf(item?.id)
 
-                                    db.delete("mountain", whereClause, whereArgs)
-                                    popup.dismiss()
+                                db.delete("mountain", whereClause, whereArgs)
+                                popup.dismiss()
 
-                                    this@MountainAdapter.reloadMountains()
-                                }
-                                .setNegativeButton("No") { _, _ ->
-                                    popup.dismiss()
-                                    return@setNegativeButton
-                                }
-                            .show()
-                        }
+                                this@MountainAdapter.reloadMountains()
+                            }
+                            .setNegativeButton("No") { _, _ ->
+                                popup.dismiss()
+                                return@setNegativeButton
+                            }
+                        .show()
 
                         true
                     }

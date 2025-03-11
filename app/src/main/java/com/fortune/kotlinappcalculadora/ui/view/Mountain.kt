@@ -1,8 +1,5 @@
 package com.fortune.kotlinappcalculadora.ui.view
 
-import android.content.ContentValues
-import android.database.sqlite.SQLiteDatabase
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -17,6 +14,7 @@ import com.fortune.kotlinappcalculadora.R
 import com.fortune.kotlinappcalculadora.db.AppDatabaseSqlite
 import com.fortune.kotlinappcalculadora.ui.adapters.MountainAdapter
 import com.fortune.kotlinappcalculadora.ui.adapters.MountainItem
+import com.fortune.kotlinappcalculadora.ui.enums.MountainOperation
 import com.fortune.kotlinappcalculadora.ui.dialogs.MountainDialog
 
 class Mountain : AppCompatActivity() {
@@ -56,9 +54,13 @@ class Mountain : AppCompatActivity() {
             R.layout.list_item_mountain, getMountainItems(), supportFragmentManager,
             intent.getStringExtra("type")?.get(0) ?: '?'
         ) {
-            loadListViewAdapter()
-            loadNMountainsConquered()
+            reloadMountains()
         }
+    }
+
+    private fun reloadMountains() {
+        loadListViewAdapter()
+        loadNMountainsConquered()
     }
 
     private fun getMountainItems(): List<MountainItem> {
@@ -97,13 +99,15 @@ class Mountain : AppCompatActivity() {
             val mHeight = cursor.getDouble(cursor.getColumnIndexOrThrow("height"))
             val user = cursor.getString(cursor.getColumnIndexOrThrow("user"))
 
-            mountainItemList.add(MountainItem(
-                id,
-                mName,
-                mHeight,
-                user,
-                staticImage
-            ))
+            mountainItemList.add(
+                MountainItem(
+                    id,
+                    mName,
+                    mHeight,
+                    user,
+                    staticImage
+                )
+            )
         }
 
         cursor.close()
@@ -120,28 +124,11 @@ class Mountain : AppCompatActivity() {
             add_mountain.visibility = View.VISIBLE
 
             add_mountain.setOnClickListener {
-                MountainDialog({ id, name, height, username ->
-                    injectMountain(id, name, height, username)
-                    loadListViewAdapter()
-                }).show(supportFragmentManager, "mountain_dialog")
+                MountainDialog(MountainOperation.CREATE, null, {
+                    reloadMountains()
+                }).show(supportFragmentManager, "Create mountain")
             }
         }
-    }
-
-    private fun injectMountain(id: String, name: String, height: String, username: String) {
-        val conex = AppDatabaseSqlite(this, "exam-db", null, 1)
-        val db = conex.writableDatabase
-
-        val values = ContentValues().apply {
-            put("id", id)
-            put("name", name)
-            put("height", height)
-            put("user", username)
-        }
-
-        db.insert("mountain", null, values)
-        db.close()
-        conex.close()
     }
 
     private fun adjustScreenInsets() {
