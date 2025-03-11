@@ -1,5 +1,6 @@
 package com.fortune.kotlinappcalculadora.ui.view
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -101,7 +102,6 @@ class Mountain : AppCompatActivity() {
         )
 
         val mountainItemList: MutableList<MountainItem> = mutableListOf()
-        val staticImage = ContextCompat.getDrawable(this, R.drawable.calculadora)
 
         while (cursor.moveToNext()) {
             val id = cursor.getString(cursor.getColumnIndexOrThrow("id"))
@@ -109,13 +109,16 @@ class Mountain : AppCompatActivity() {
             val mHeight = cursor.getDouble(cursor.getColumnIndexOrThrow("height"))
             val user = cursor.getString(cursor.getColumnIndexOrThrow("user"))
 
+            var image: Int = android.R.drawable.ic_menu_mapmode
+            val imageDraweable = findMountainImageDrawable(mName)
+
             mountainItemList.add(
                 MountainItem(
                     id,
                     mName,
                     mHeight,
                     user,
-                    staticImage
+                    imageDraweable
                 )
             )
         }
@@ -124,6 +127,22 @@ class Mountain : AppCompatActivity() {
         db.close()
 
         return mountainItemList
+    }
+
+    private fun findMountainImageDrawable(mName: String?): Drawable? {
+        return when (mName?.toLowerCase()) {
+            "alcazaba" -> ContextCompat.getDrawable(this, R.drawable.alcazaba_image)
+            "almanzor" -> ContextCompat.getDrawable(this, R.drawable.almanzor_image)
+            "everest" -> ContextCompat.getDrawable(this, R.drawable.everest_image)
+            "fuji" -> ContextCompat.getDrawable(this, R.drawable.fuji_image)
+            "maladeta" -> ContextCompat.getDrawable(this, R.drawable.maladeta_image)
+            "mulhacen" -> ContextCompat.getDrawable(this, R.drawable.mulhacen_image)
+            "posets" -> ContextCompat.getDrawable(this, R.drawable.posets_image)
+            "prieta" -> ContextCompat.getDrawable(this, R.drawable.prieta_image)
+            "teide" -> ContextCompat.getDrawable(this, R.drawable.teide_image)
+            "veleta" -> ContextCompat.getDrawable(this, R.drawable.veleta_image)
+            else -> ContextCompat.getDrawable(this, android.R.drawable.ic_menu_mapmode)
+        }
     }
 
     private fun manageUserData() {
