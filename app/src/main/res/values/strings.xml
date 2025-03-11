@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">SanchezIyanParcial2</string>
+
+    //Main
     <string name="calculadora_imagen">calculadora imagen</string>
     <string name="my_exam_app">My Exam App</string>
-    <string name="mis_monta_as">Mis montañas</string>
+    <string name="mis_montanas">Mis montañas</string>
+
+    //Calculadora
     <string name="borrar">BORRAR</string>
     <string name="_1">1</string>
     <string name="_plus">+</string>
@@ -20,4 +24,18 @@
     <string name="inv">INV</string>
     <string name="_0">0</string>
     <string name="equals">=</string>
+
+    //Login
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="usuario">Usuario</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+
+    //Mountain activity
+    <string name="n_de_cimas_conquistadas">Nº de cimas conquistadas</string>
+    <string name="anadir_montana">Añadir montaña</string>
+
+    //Mountain Dialog
+    <string name="nombre">Nombre</string>
+    <string name="altura">Altura</string>
 </resources>

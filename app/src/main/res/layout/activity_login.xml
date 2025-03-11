@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:text="Iniciar sesión"
+            android:text="@string/iniciar_sesion"
             android:textSize="40sp"
             android:textStyle="bold"
             android:layout_marginTop="100dp"/>
@@ -27,7 +27,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
-            android:hint="Usuario"/>
+            android:hint="@string/usuario"/>
 
     <EditText
             android:id="@+id/password_field"
@@ -38,7 +38,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
-            android:hint="Password"/>
+            android:hint="@string/password"/>
     
     <Button
             android:id="@+id/btn_login"
@@ -49,6 +49,6 @@
             android:layout_marginEnd="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="100dp"
-            android:text="Login"
+            android:text="@string/login"
             android:textSize="30sp"/>
 </LinearLayout>

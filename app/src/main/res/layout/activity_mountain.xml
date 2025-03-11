@@ -8,7 +8,7 @@
         tools:context=".ui.view.Mountain">
 
     <TextView
-            android:text="Mis montañas"
+            android:text="@string/mis_montanas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,7 @@
             android:layout_marginTop="71dp" />
 
     <TextView
-            android:text="Nº de cimas conquistadas"
+            android:text="@string/n_de_cimas_conquistadas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/n_cimas_conquistadas"
@@ -44,7 +44,7 @@
             android:layout_marginStart="174dp"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="160dp"
-            android:text="Añadir montaña"
+            android:text="@string/anadir_montana"
             android:visibility="invisible"
             android:textSize="20sp"
             android:textColor="@color/black"/>
